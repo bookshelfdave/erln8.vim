@@ -17,14 +17,11 @@ function! Erln8List()
     let e8win = bufwinnr(fn)
     if(e8win == -1)
       execute "sbuffer " . bufnr(fn)
-    echo "Foo2"
     else
       execute e8win . 'wincmd w'
-    echo "Foo3"
       return
     endif
   else
-    echo "Foo1"
     execute "new list.erln8"
   endif
   call Erln8DisplayList()
@@ -38,22 +35,22 @@ function! Erln8Buildable()
     let e8win = bufwinnr(fn)
     if(e8win == -1)
       execute "sbuffer " . bufnr(fn)
-    echo "Foo2"
     else
       execute e8win . 'wincmd w'
-    echo "Foo3"
       return
     endif
   else
-    echo "Foo1"
     execute "new buildable.erln8"
   endif
   call Erln8DisplayBuildable()
 endfunction
 
-function! ErlnCurrent()
+function! Erln8Current()
   let cmd = "erln8 --show"
   let currentErlang = split(system(cmd), '\n')
   echo currentErlang[0]
 endfunction
 
+command! Erln8Current call Erln8Current()
+command! Erln8List call Erln8List()
+command! Erln8Buildable call Erln8Buildable()
