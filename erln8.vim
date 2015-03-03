@@ -85,7 +85,20 @@ function! E8Use(vsn, bang)
 endfunction
 
 function! E8ListComplete(arg, line, pos)
-  return E8List()
+  let erls = E8List()
+  " return the entire list if no character specified
+  if a:arg == ''
+    return erls
+  end
+
+  let matches = []
+  let thereg = '\' . a:arg . '\c'
+  for erl in erls
+    if matchstr(erl, thereg) != ''
+      call insert(matches, erl)
+    endif
+  endfor
+  return matches
 endfunction
 
 command! -bang -complete=customlist,E8ListComplete -nargs=* Erln8Use call E8Use( <q-args>, "<bang>" )
